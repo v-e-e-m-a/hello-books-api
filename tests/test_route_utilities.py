@@ -46,12 +46,11 @@ def test_create_model_book(client):
     result = create_model(Book, test_data)
 
     # Assert
-    assert result.status_code == 201
-    assert result.get_json() == {
-        "id": 1,
-        "title": "New Book",
-        "description": "The Best!"
-    }
+    assert isinstance(result, tuple)
+    assert result[0]["id"] == 1
+    assert result[0]["title"] == "New Book"
+    assert result[0]["description"] == "The Best!"
+    assert result[1] == 201
 
 def test_create_model_book_missing_data(client):
     # Arrange
@@ -80,11 +79,10 @@ def test_create_model_author(client):
     result = create_model(Author, test_data)
 
     # Assert
-    assert result.status_code == 201
-    assert result.get_json() == {
-        "id": 1,
-        "name": "New Author"
-    }
+    assert isinstance(result, tuple)
+    assert result[0]["id"] == 1
+    assert result[0]["name"] == "New Author"
+    assert result[1] == 201
 
 def test_get_models_with_filters_one_matching_book(two_saved_books):
     # Act
